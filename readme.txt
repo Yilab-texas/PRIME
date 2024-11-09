@@ -3,4 +3,3 @@ The script for running evaluation 5 Fold is as follows:
 bash run_eval.sh $fold_num
 e.g. bash run_eval.sh 0
 
-todo: clean training and feature generation codes
