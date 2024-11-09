@@ -1,0 +1,5 @@
+mutation,interactor,pred_change,pred_logic_0,pred_logic_1,label_change,label_before
+smile.BRCA1_60C>G,smile.BARD1,1,0.5525838732719421,2.9555084705352783,1,1
+smile.BRCA1_1748P>R,smile.BACH1,0,7.504363059997559,0.0,1,1
+smile.IL-2_61F>A,smile.IL-2_receptor,1,0.9199383854866028,3.157395839691162,1,1
+smile.BCL-2_144G>E,smile.BAX,0,2.2487993240356445,0.506457507610321,1,1

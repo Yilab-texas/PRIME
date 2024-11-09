@@ -1,0 +1,101 @@
+
+patch_dpath: datasets/embeddings/sdnn/sdnn_corrected_ppi.h5
+
+
+
+# whether data is splited 
+splited: True
+
+# if data splited
+# random
+
+
+# === Paths - Common ===
+
+
+# whether save model 
+save_model: False
+save_results: False
+
+# === Dataset ===
+# binary classification or contrasitive learning cls/cont/dscript/sdnn
+train_task: sdnn
+pair: True
+# all/mute,  use whole contact map (M*N) or only the mutated position (1*N),  default all
+pair_mode: all
+
+# === Dataset ===
+# This batch size is a special batch size
+# Batch size for the training subset
+batch_size_trn: 32
+# Batch size for the validation subset
+batch_size_val: 32
+# Batch size for the test subset
+batch_size_tst: 32
+
+# === Training ===
+
+# Learning rate scheduler (choices: 'const' / 'cosine' / 'mstep')
+lr_scheduler: mstep
+# Initial learning rate
+lr_init: 0.003
+# Weight decaying factor / L2-regularization
+weight_decay: 0.0001
+# List of epoch indices for the multi-step LR scheduler
+lr_mlstn: [30, 68]
+# Multiplicative factor of learning rate decay for the multi-step LR scheduler
+lr_gamma: 0.1
+# Minimal learning rate for the cosine annealing LR scheduler
+lr_min: 1.0e-4
+# Number of epochs for model training
+n_epochs: 50
+# dropout rate
+dropout: 0.5
+
+
+seed: 42
+# === Execution Mode ===
+
+# Execution mode (choices: 'train' OR 'eval')
+exec_mode: eval
+
+# === Features ===
+
+# Number of dimensions for distance encoding tensors
+n_dims_denc: 61
+
+# === Model - Base ===
+
+# Model class (choices: 'Resnet' OR 'VGG' OR '')
+model_class: Resnet
+# layer num of pred_net
+pred_layer_num: 2
+# last new fc hidden size
+fc_hidden: 512
+# dist bin number
+class_num: 2
+# original CE loss weight
+ori_coeff: 1.0
+# distance loss weight
+GD_coeff: 0
+# max edit distence, if use distance loss
+max_dist: 5
+# distance loss weight
+edit_coeff: 0
+
+discrim_weight: 1.0
+
+
+
+# Rule of select optimized model (choices: 'acc' OR 'loss' )
+opt_rule: acc
+
+# === Miscellaneous ===
+
+# Number of parallel workers in the data loader
+n_workers: 0
+# Number of iterations for progress reporting
+n_iters_rep: 128
+# Verbose level (choices: 'DEBUG' / 'INFO' / 'WARNING' / 'ERROR')
+verbose_level: INFO
+
