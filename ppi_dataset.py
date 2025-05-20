@@ -51,11 +51,11 @@ class SDNNPPIdataset(Dataset):
             return geneA.float(), geneB.float(), label, geneA_2.float(), geneB.float(), label_2, same, esm_diff
     
     def __get_pair_df(self):
-        if self.k_fold: # 5fold
+        if self.k_fold > 1: # 5fold
             if not self.is_train:
                 test_fold_fpath = os.path.join(self.csv_dpath, '{}_fold_{}.csv'.format(self.data_type, self.fold))
                 print('test_fold_fpath', test_fold_fpath)
-                ids = pd.read_csv(test_fold_fpath, sep = ',', names = ['id_A', 'id_B', 'label', 'id_A_2', 'label_2', 'mute_idx'])
+                ids = pd.read_csv(test_fold_fpath, header=None,names = ['id_A', 'id_B', 'label', 'id_A_2', 'label_2', 'mute_idx'])
             else:
                 ids = pd.DataFrame()
                 for fold_id in range(self.k_fold):
@@ -63,11 +63,11 @@ class SDNNPPIdataset(Dataset):
                         continue
                     current_fold_fpath = os.path.join(self.csv_dpath, '{}_fold_{}.csv'.format(self.data_type, fold_id))
                     print('train_fold_fpath', current_fold_fpath)
-                    df_i = pd.read_csv(current_fold_fpath, sep = ',', names = ['id_A', 'id_B', 'label', 'id_A_2', 'label_2', 'mute_idx'])
+                    df_i = pd.read_csv(current_fold_fpath, header=None, names = ['id_A', 'id_B', 'label', 'id_A_2', 'label_2', 'mute_idx'])
                     ids = pd.concat([ids, df_i], ignore_index=True)
       
         else:
-            ids = pd.read_csv(self.set_path, sep = ',', names = ['id_A', 'id_B', 'label', 'id_A_2', 'label_2', 'mute_idx'])
+            ids = pd.read_csv(self.set_path, header=None, names = ['id_A', 'id_B', 'label', 'id_A_2', 'label_2', 'mute_idx'])
         aac_A = []
         aac_B = []
         aac_A_2 = []

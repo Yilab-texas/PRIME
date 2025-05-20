@@ -1,0 +1,53 @@
+train_task: sdnn
+model_class: Resnet
+exec_mode: train
+
+# === 数据路径与设置 ===
+patch_dpath: datasets/embeddings/sdnn_corrected_ppi.h5
+trn_fpath: datasets/csvs/random_fold_0.csv  # 占位，k_fold 模式下会动态加载
+val_fpath: datasets/csvs/random_fold_0.csv
+tst_fpath: datasets/csvs/random_fold_0.csv
+k_fold: 5
+fold: 0
+splited: True
+data_type: random
+pair: True
+pair_mode: all
+
+#
+# # === 训练参数 ===
+batch_size_trn: 32
+batch_size_val: 32
+batch_size_tst: 32
+n_epochs: 8
+dropout: 0.5
+dropout_p: 0.3
+lr_init: 0.001
+weight_decay: 0.0001
+lr_scheduler: mstep
+lr_mlstn: [30, 40]
+lr_gamma: 0.1
+seed: 42
+max_dist: 30
+#
+# # === 损失函数系数 ===
+ori_coeff: 1.0
+GD_coeff: 1.0
+edit_coeff: 1.0
+pair_weight: 0.05
+discrim_weight: 1.0
+one_label_weight: 1.0
+#
+# # === 模型结构 ===
+fc_hidden: 512
+pred_layer_num: 2
+class_num: 2
+use_esm: True
+esm_pool: False
+#
+# # === 输出与调试 ===
+save_model: True
+save_results: True
+opt_rule: acc
+n_workers: 0
+n_iters_rep: 128

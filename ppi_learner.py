@@ -51,6 +51,7 @@ class PPILearner():
         self.fc_hidden = config['fc_hidden']
         self.class_num = config['class_num']
         self.patch_dpath = config['patch_dpath']
+        self.load_model_fpath = config.get('load_model_fpath', None)
         self.device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
         self.savemodel = self.config['save_model']
         self.mdl_dpath = self.config['mdl_dpath']
@@ -105,7 +106,7 @@ class PPILearner():
         # if fold != -1:
         #     self.nni_results_fpath = os.path.join(self.config['mdl_dpath'], 'case_results_fold{}.csv'.format(fold))
         #     self.feature_fpath = os.path.join(self.config['mdl_dpath'], 'case_features_fold{}.pt'.format(fold))   
-        data_loader_tst = self.__sdnn_loader_eval(fold=-1)
+        data_loader_tst = self.__sdnn_loader_eval(fold=fold)
         logging.info(f'# of iter in the test subset:{len(data_loader_tst.dataset)}')
         pred_net = self.__build_models(self.train_task)
         pred_net = self.restore_model(pred_net, model_fpath)
@@ -170,7 +171,9 @@ class PPILearner():
         logging.info(f'# of iter in the test subset:{len(data_loader_tst.dataset)}')
         
         pred_net = self.__build_models(self.train_task)
-        
+        if self.load_model_fpath:
+            pred_net = self.restore_model(pred_net, self.load_model_fpath)
+            logging.info(f"✅ Loaded pretrained model from: {self.load_model_fpath}") 
         optimizer, scheduler = self.__build_optimizer(pred_net)
         criterion = nn.CrossEntropyLoss()
         
